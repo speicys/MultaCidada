@@ -2,6 +2,8 @@ package multacidada
 
 class InfracaoController {
 
+	def infracaoService
+	
     def index() { 
 		render(view:"index")
 	}
@@ -9,6 +11,8 @@ class InfracaoController {
 	
 	def load() {
 		println "Hello world CSV"
+		
+		infracaoService.loadCSV();
 		
 		render(view:"/index")	
 	}

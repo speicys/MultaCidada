@@ -6,3 +6,4 @@ target/classes
 target/work/plugin-build-classes
 target/work
 wrapper
+stacktrace.log

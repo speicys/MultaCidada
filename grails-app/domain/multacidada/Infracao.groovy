@@ -2,15 +2,22 @@ package multacidada
 
 class Infracao {
 
-	String auto;
+	String ait;
 	Date data;
-	int codEnquadramento;
+	Integer codEnquadramento;
 	String descEnquadramento;
-	int codLocal;
+	Integer codLocal;
 	String descLocal;
-	int codEquipamento;
+	Integer codEquipamento;
 	String serialEquipamento;
 	
+	String georeference;
+	
     static constraints = {
+		georeference(nullable:true)
     }
+	
+	static mapping = {
+		georeference sqlType: "char", length:1200
+	}
 }
