@@ -2,19 +2,19 @@ package multacidada
 
 import grails.rest.*
 
-@Resource(uri='/multa', formats=['json', 'xml'])
+@Resource(formats=['json', 'xml'])
 class Multa {
 
 	double latitude;
 	double longitude;
-	String fotoFileName;
+	String fotoURL;
 	String userID;
-	
-	int yep=0;
-	int nope=0;
-	
+
+	int yep = 0;
+	int nope = 0;
+
 	MultaTipo tipo;
-	
-    static constraints = {
-    }
+
+	static constraints = {
+	}
 }

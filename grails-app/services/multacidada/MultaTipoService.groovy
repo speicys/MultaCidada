@@ -14,5 +14,5 @@ class MultaTipoService {
 		MultaTipo.findByNome("Vaga idoso") ?: new MultaTipo(nome:"Vaga idoso").save(failOnError: true);
 		MultaTipo.findByNome("Parado em faixa de pedestre") ?: new MultaTipo(nome:"Parado em faixa de pedestre").save(failOnError: true);
 		MultaTipo.findByNome("Veiculo precario") ?: new MultaTipo(nome:"Veiculo precario").save(failOnError: true);
-    }
+	}
 }
