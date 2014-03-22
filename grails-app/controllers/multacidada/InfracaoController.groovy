@@ -16,4 +16,14 @@ class InfracaoController {
 		
 		render(view:"/index")	
 	}
+
+	def geolocate() {
+		println "Hello world Geolocate"
+	
+		def infracoes = Infracao.list();
+
+				
+		render(view:"/index")
+	}
+
 }
