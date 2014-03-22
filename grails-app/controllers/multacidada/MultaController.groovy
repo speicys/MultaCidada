@@ -22,29 +22,33 @@ class MultaController  {
 	}
 
 	def show() {
-		if(params.id && Multa.exists(params.id)){
-			Multa multa = Multa.findById(params.id);
-			println "show() "+multa
-		    respond multa
-		}else{
+		if(!params.id) {
 			list()
+			return;
 		}
+		Multa multa = Multa.findById(params.id);
+		if (!multa) {
+			return("Erro. Multa nao encontrada");
+		}
+		
+		println "show() "+multa
+		respond multa
 	}
 
 	def valida() {
 		Multa multa = Multa.findById(params.id);
-			println "valida() "+params
+		println "valida() "+params
 		if(!multa){
 			return("Erro. Multa nao encontrada");
 		}
-		
+
 
 		if (params.valida.equals("yep")) {
 			multa.yep++;
 		} else {
 			multa.nope++;
 		}
-		
+
 		if(!multa.save(flush: true, failOnError: true)){
 			return("erro");
 		}
