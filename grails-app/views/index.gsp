@@ -19,7 +19,7 @@
       body {
         padding-top: 50px;
         padding-bottom: 60px;
-        background: url("${resource(dir: 'images', file: 'grey.png')}") repeat 0 0;
+        background: url("${resource(dir: 'images', file: 'math.png')}") repeat 0 0;
       }
 
       .navbar {
@@ -89,16 +89,25 @@
   	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 	  <a class="navbar-brand" href="${createLink(uri: '/')}">
-		<img src="${resource(dir: 'images', file: 'note.jpg')}"/>
+		<img src="${resource(dir: 'images', file: 'note.png')}"/>
 		 Multa Cidadã
 	  </a>
 	</div>
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-		  <li><g:link controller="tweet" action="label">Label</g:link>
-		  <li><g:link controller="tweet" action="showCount">Count</g:link>
+		  
 	  </ul>
 	</div>
 	</nav>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-1 col-md-2">
+				<g:formRemote name="csv" url="[controller:'infracao', action:'load']">
+					<button class="btn btn-default btn-lg active">Carregar CSV</button>
+				</g:formRemote>
+			</div>
+		</div>	
+	</div>
   </body>
 </html>
