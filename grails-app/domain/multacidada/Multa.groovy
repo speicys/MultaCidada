@@ -13,7 +13,7 @@ class Multa {
 	int yep = 0;
 	int nope = 0;
 
-	MultaTipo tipo;
+	int tipo;
 
 	static constraints = {
 	}

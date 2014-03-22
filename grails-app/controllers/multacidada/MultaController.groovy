@@ -1,27 +1,20 @@
 package multacidada
 
-import grails.converters.JSON
-import grails.rest.RestfulController
-import grails.transaction.Transactional
+import groovy.json.JsonSlurper
 
-class MultaController extends RestfulController {
+import org.springframework.web.multipart.MultipartFile
+
+class MultaController  {
 	static responseFormats = ['json', 'xml']
-	
+
+	def servletContext
+
 	def multaService
 
 	def init() {
 		println "loading"
 		multaService.load()
-
 		list()
-	}
-
-	def validate() {
-		println "validate()"
-
-		// retrieve multa ID
-
-		// increase relevant counter (yep or nope)
 	}
 
 	def index() {
@@ -30,27 +23,53 @@ class MultaController extends RestfulController {
 
 	def show() {
 		if(params.id && Multa.exists(params.id)){
-			respond Multa.findById(params.id)
+			Multa multa = Multa.findById(params.id);
+			println "show() "+multa
+		    respond multa
 		}else{
 			list()
 		}
 	}
 
-	@Transactional
-	def save(Multa multa) {
-		//Multa multa = new Multa(params.multa)
-		if(multa.hasErrors()) {
-			respond multa.errors, view:'create'
+	def valida() {
+		Multa multa = Multa.findById(params.id);
+			println "valida() "+params
+		if(!multa){
+			return("Erro. Multa nao encontrada");
 		}
-		//		def multa = new Multa(params['multa'])
+		
 
-		if(multa.save(flush: true, failOnError: true)){
-			respond multa
-		}else{
-			//handle errors...
-			println "error"
+		if (params.valida.equals("yep")) {
+			multa.yep++;
+		} else {
+			multa.nope++;
 		}
+		
+		if(!multa.save(flush: true, failOnError: true)){
+			return("erro");
+		}
+
+		respond multa
 	}
+
+
+	def save() {
+		println "save() - "+params.multa
+
+		MultipartFile file = request.getFile("foto")
+		def imageUrl = multaService.saveFile(file);
+
+		def json =  new JsonSlurper().parseText(params.multa)
+
+		Multa multa = new Multa(json)
+		multa.fotoURL=imageUrl
+		if(!multa.save(flush: true, failOnError: true)){
+			return("erro");
+		}
+
+		respond multa
+	}
+
 
 	def list() {
 		println "list()"
