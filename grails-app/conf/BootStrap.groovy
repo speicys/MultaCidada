@@ -1,4 +1,4 @@
-import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
+import grails.converters.JSON
 
 
 class BootStrap {

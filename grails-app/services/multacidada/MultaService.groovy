@@ -11,8 +11,10 @@ class MultaService {
 
 	def load() {
 
-		new Multa(userID:"111", latitude:-23, longitude:-46,fotoURL:"/fotos/cet.jpg",tipo:1).save(failOnError: true);
-		new Multa(userID:"222", latitude:-23.2, longitude:-46.2,fotoURL:"/fotos/cet2.jpg", tipo:2).save(failOnError: true);
+		new Multa(userID:"111", latitude:-23, longitude:-46,fotoURL:"/fotos/cet3.jpg",tipo:1, data:"2014-03-12 12:40").save(failOnError: true);
+		new Multa(userID:"222", latitude:-23.2, longitude:-46.2,fotoURL:"/fotos/cet2.jpg", tipo:2, data:"2014-03-14 13:20").save(failOnError: true);
+		new Multa(userID:"111", latitude:-23, longitude:-46,fotoURL:"/fotos/cet3.jpg",tipo:1, data:"2014-03-15 10:00").save(failOnError: true);
+		new Multa(userID:"222", latitude:-23.2, longitude:-46.2,fotoURL:"/fotos/cet2.jpg", tipo:2, data:"2014-03-15 15:00").save(failOnError: true);
 		//new Teste(title:"The Stand").save()
 		//new Teste(title:"The Shining").save()
 
