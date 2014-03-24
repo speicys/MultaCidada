@@ -77,6 +77,6 @@ class MultaController  {
 
 	def list() {
 		println "list()"
-		respond Multa.list(), model:[multaCount: Multa.count()]
+		respond Multa.list().reverse(), model:[multaCount: Multa.count()]
 	}
 }
