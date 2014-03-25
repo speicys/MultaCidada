@@ -42,7 +42,19 @@
 		
 		<g:each in="${multas}" status="i" var="multa">
 				<g:javascript>
-					var marker = L.marker([${multa.latitude}, ${multa.longitude}]).addTo(map);
+					var icon = L.icon({
+					    iconUrl: "http://localhost:8080/MultaCidada/${multa.fotoURL}",
+					    shadowUrl: '',
+					
+					    iconSize:     [40, 40], // size of the icon
+					    shadowSize:   [0, 0], // size of the shadow
+					    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+					    shadowAnchor: [0, 0],  // the same for the shadow
+					    popupAnchor:  [0, -44] // point from which the popup should open relative to the iconAnchor
+					});
+					
+					var marker = L.marker([${multa.latitude}, ${multa.longitude}], {icon: icon}).addTo(map);
+					marker.bindPopup('<img src="http://localhost:8080/MultaCidada/${multa.fotoURL}"} height="120" width="120"></img><br><p>${multa.data}</p>');
 				</g:javascript>
 		</g:each>
 			
