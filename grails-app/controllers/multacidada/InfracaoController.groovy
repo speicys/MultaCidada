@@ -8,7 +8,8 @@ class InfracaoController {
 	def infracaoService
 
 	def index() {
-		render(view:"index")
+		println "entered index";
+		render(view:"/index", model:[multas:Multa.list().reverse()])
 	}
 
 
