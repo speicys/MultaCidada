@@ -1,11 +1,14 @@
 <%@ page import="multacidada.Multa" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
 <meta name="layout" content="main" />
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-
+<script src="lib/angular/angular.min.js"></script>
+<script src="js/services.js"></script>
+<script src="lib/angular/angular-resource.min.js"></script>
+  
 <style type="text/css">
 	#map { height: 580px; }
 </style>
@@ -42,11 +45,13 @@
 		
 		<g:each in="${multas}" status="i" var="multa">
 				<g:javascript>
+					var url='${createLink(uri:"${multa.fotoURL}", absolute:true)}';
 					var icon = L.icon({
-					    iconUrl: "http://localhost:8080/MultaCidada/${multa.fotoURL}",
+					    //iconUrl:"http://localhost:8080/MultaCidada/${multa.fotoURL}",
+					    iconUrl:'${createLink(uri:"/images/marker.png", absolute:true)}',
 					    shadowUrl: '',
 					
-					    iconSize:     [40, 40], // size of the icon
+					    iconSize:     [30, 30], // size of the icon
 					    shadowSize:   [0, 0], // size of the shadow
 					    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
 					    shadowAnchor: [0, 0],  // the same for the shadow
@@ -54,7 +59,7 @@
 					});
 					
 					var marker = L.marker([${multa.latitude}, ${multa.longitude}], {icon: icon}).addTo(map);
-					marker.bindPopup('<img src="http://localhost:8080/MultaCidada/${multa.fotoURL}"} height="120" width="120"></img><br><p>${multa.data}</p>');
+					marker.bindPopup('<img src="'+url+'" height="120" width="120"></img><br><p style="font-family:courier">${multa.data}</p><p style="font-family:courier">${multa.nomeTipo}</p>');
 				</g:javascript>
 		</g:each>
 			

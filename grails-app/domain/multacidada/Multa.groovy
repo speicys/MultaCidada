@@ -18,6 +18,10 @@ class Multa {
 	int nope = 0;
 
 	int tipo;
+	
+	String getNomeTipo() { MultaTipo.tipos.get(tipo)}
+	
+	static transients=['nomeTipo']
 
 	static constraints = {
 	}
