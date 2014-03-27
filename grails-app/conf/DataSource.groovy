@@ -30,6 +30,7 @@ environments {
 		dataSource {
 			dbCreate = "update"
 			url = "jdbc:mysql://127.0.0.1:3306/marronzinho"
+			driverClassName = "com.mysql.jdbc.Driver"
 			username = "devuser"
 			password = "devpass"
 			pooled = true
