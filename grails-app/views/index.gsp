@@ -57,7 +57,19 @@
 			    	map: mapSP,
 			    	title:"Hello World!",
 			    	icon: image
-			});
+				});
+				var infowindow = new google.maps.InfoWindow();
+  				
+  				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            		return function() {
+            			var baseURL=parsedMulta[i].fotoURL;
+						var url='${createLink(uri:"/", absolute:true)}'+baseURL;
+						var contentString = '<img src="'+url+'" height="120" width="120"></img><br><p style="font-family:courier">'+parsedMulta[i].data+'</p><p style="font-family:courier">'+parsedMulta[i].nomeTipo+'</p>';
+				
+              			infowindow.setContent(contentString);
+              			infowindow.open(mapSP, marker);
+            		}
+          		})(marker, i));
 	      	}
 	      }
 	      google.maps.event.addDomListener(window, 'load', initialize);
