@@ -30,7 +30,7 @@ environments {
 	
 	production {
 		dataSource {
-			dbCreate = "create"
+			dbCreate = "update"
 			url = "jdbc:mysql://127.0.0.1:3306/marronzinho"
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "devuser"
