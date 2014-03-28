@@ -29,40 +29,41 @@
 			</g:formRemote>
 		</div> -->
 		
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS2pjye_hs-5WEsGBEwzayK9nubfSRG4Q&sensor=false">
+	    </script>
+	    <g:javascript>
+	      var mapSP;
+	      function initialize() {
+	        var mapOptions = {
+	          center: new google.maps.LatLng(-23.5899431, -46.6351246),
+	          zoom: 11
+	        };
+	        mapSP = new google.maps.Map(document.getElementById("map"),
+	            mapOptions);
+	            
+	        loadMarkers();
+	      }
+	      function loadMarkers() {
+	      	var objJSONData =  '${multas.encodeAsJSON()}'
+			var parsedMulta = eval(objJSONData); 
+	      	for(var i=0; i<parsedMulta.length; i++) {
+	      		var image = '${createLink(uri:"/images/marker.png", absolute:true)}';
+				var myLatlng = new google.maps.LatLng(parsedMulta[i].latitude, parsedMulta[i].longitude);
+				var marker = new google.maps.Marker({
+			    	position: myLatlng,
+			    	map: mapSP,
+			    	title:"Hello World!",
+			    	icon: image
+			});
+	      	}
+	      }
+	      google.maps.event.addDomListener(window, 'load', initialize);
+	      
+	    </g:javascript>
+	    
 		<div id="map" class="col-md-offset-1 col-md-10">
 			
-		</div>
-		
-		<g:javascript>
-			var map = L.map('map').setView([-23.5899431,-46.6351246], 11);
-
-			// add an OpenStreetMap tile layer
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			}).addTo(map);
-
-		</g:javascript>
-		
-		<g:each in="${multas}" status="i" var="multa">
-				<g:javascript>
-					var url='${createLink(uri:"${multa.fotoURL}", absolute:true)}';
-					var icon = L.icon({
-					    //iconUrl:"http://localhost:8080/MultaCidada/${multa.fotoURL}",
-					    iconUrl:'${createLink(uri:"/images/marker.png", absolute:true)}',
-					    shadowUrl: '',
-					
-					    iconSize:     [30, 30], // size of the icon
-					    shadowSize:   [0, 0], // size of the shadow
-					    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-					    shadowAnchor: [0, 0],  // the same for the shadow
-					    popupAnchor:  [0, -44] // point from which the popup should open relative to the iconAnchor
-					});
-					
-					var marker = L.marker([${multa.latitude}, ${multa.longitude}], {icon: icon}).addTo(map);
-					marker.bindPopup('<img src="'+url+'" height="120" width="120"></img><br><p style="font-family:courier">${multa.data}</p><p style="font-family:courier">${multa.nomeTipo}</p>');
-				</g:javascript>
-		</g:each>
-			
+		</div>	
 		
 	</div>
 </body>
