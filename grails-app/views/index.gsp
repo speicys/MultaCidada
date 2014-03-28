@@ -47,8 +47,11 @@
 	      	var objJSONData =  '${multas.encodeAsJSON()}'
 			var parsedMulta = eval(objJSONData); 
 	      	for(var i=0; i<parsedMulta.length; i++) {
-	      		var image = '${createLink(uri:"/images/marker.png", absolute:true)}';
-				var myLatlng = new google.maps.LatLng(parsedMulta[i].latitude, parsedMulta[i].longitude);
+	      		var image = {
+				   url: '${createLink(uri:"/images/marker.png", absolute:true)}',
+				   scaledSize: new google.maps.Size(20, 20)
+			   }
+	      		var myLatlng = new google.maps.LatLng(parsedMulta[i].latitude, parsedMulta[i].longitude);
 				var marker = new google.maps.Marker({
 			    	position: myLatlng,
 			    	map: mapSP,
