@@ -9,7 +9,7 @@ class InfracaoController {
 
 	def index() {
 		println "entered index";
-		render(view:"/index", model:[multas:Multa.list().reverse()])
+		render(view:"/index")
 	}
 
 
