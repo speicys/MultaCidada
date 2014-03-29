@@ -79,7 +79,7 @@ class MultaController  {
 	def list() {
 		println "list()"
 		def result = []
-		for (item in Multa.list(sort: "id", order: "desc")) {
+		for (item in Multa.list(max:1000, sort: "id", order: "desc")) {
 			result.add(item.properties)
 		}
 		respond result
