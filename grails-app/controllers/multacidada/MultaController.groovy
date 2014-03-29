@@ -1,5 +1,8 @@
 package multacidada
 
+import java.awt.event.ItemEvent;
+import java.sql.ResultSet;
+
 import groovy.json.JsonSlurper
 
 import org.springframework.web.multipart.MultipartFile
@@ -32,7 +35,7 @@ class MultaController  {
 		}
 		
 		println "show() "+multa
-		respond multa
+		respond multa.properties
 	}
 
 	def valida() {
@@ -53,9 +56,8 @@ class MultaController  {
 			return("erro");
 		}
 
-		respond multa
+		respond multa.properties
 	}
-
 
 	def save() {
 		println "save() - "+params.multa
@@ -71,12 +73,15 @@ class MultaController  {
 			return("erro");
 		}
 
-		respond multa
+		respond multa.properties
 	}
-
 
 	def list() {
 		println "list()"
-		respond Multa.list().reverse()
+		def result = []
+		for (item in Multa.list(sort: "id", order: "desc")) {
+			result.add(item.properties)
+		}
+		respond result
 	}
 }
