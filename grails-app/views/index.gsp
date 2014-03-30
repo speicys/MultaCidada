@@ -6,6 +6,9 @@
 <script src="lib/angular/angular.min.js"></script>
 <script src="js/services.js"></script>
 <script src="lib/angular/angular-resource.min.js"></script>
+<script src="data/multas_por_local_e_mes.min.js" type="text/javascript" ></script> 
+<script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript" ></script> 
+
 
 <style type="text/css">
 #map {
@@ -37,6 +40,66 @@
 
 	      var parsedMulta = [];	      
 	      var markers = [];
+
+
+			/**
+			* Referencias para o MarkerClusterer:
+			* - http://nooshu.com/marker-cluster-calculator-for-google-maps-v3
+			* - http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/examples.html
+			* - http://gmap3.net/en/ (esse plugin eu usei nos estudos, é mais fácil do que o que fizemos aqui.)
+			* - https://github.com/jbdemonte/gmap3/
+			*
+			* Utilitarios para tratar os dados:
+			* - CSV-to-JSON: http://www.convertcsv.com/csv-to-json.htm
+			* - Minificador: http://jscompress.com/
+			*/
+
+	      var markersMultas = [];
+
+			for(i=0; i<macDoList.length; i++){
+		        var latLng = new google.maps.LatLng(macDoList[i].lat,
+		            macDoList[i].lng);
+		        var data =   {
+		            mes: macDoList[i].mes ,
+		            total: macDoList[i].total,
+		            cod_local: macDoList[i].cod_local
+		        };
+
+			  var marker = new google.maps.Marker({'position': latLng, 'data': data});
+			  markersMultas.push(marker);
+
+			}
+
+			macDoList = null;
+
+			clusterOptions = {
+					gridSize:100,
+		    	    minimumClusterSize: 1,
+					calculator: function(values, numStyles){
+						/** 
+						* Calcula o total de multas por cluster
+						*/	                
+						var i, cnt = 0;
+		                for(i=0; i<values.length; i++){
+		                  if (values[i] && values[i].data && values[i].data.total){
+		                    cnt += values[i].data.total;
+		                  } else {
+		                    cnt++;
+		                  }
+		                }
+
+						/** 
+						* Decide a cor com base no total de multas
+						*/	                
+						if (cnt >= 400000) return {text: cnt, index: 4}; 
+						if (cnt >= 100000) return {text: cnt, index: 3}; 
+						if (cnt >= 10000) return {text: cnt, index: 2};
+						if (cnt >= 1000) return {text: cnt, index: 1}; 
+						return {text: cnt, index: 0};
+	              }
+			};
+
+			
 	      
 	      function initialize() {
 	        var mapOptions = {
@@ -44,6 +107,9 @@
 	          zoom: 11
 	        };
 	        mapSP = new google.maps.Map(document.getElementById("map"),mapOptions);
+
+	        var markerCluster = new MarkerClusterer(mapSP, markersMultas, clusterOptions);
+			markerCluster.setCalculator( clusterOptions.calculator );
 	        
 	        downloadData();
 		    window.setInterval(downloadData, 5000);
