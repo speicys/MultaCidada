@@ -68,14 +68,14 @@ class MultaController  {
 	def save() {
 		log.info "save() - "+params.multa
 		
-		def user = User.findOrSaveWhere("code":params.userCode);
+		//def user = User.findOrSaveWhere("code":params.userCode);
 		def json =  new JsonSlurper().parseText(params.multa)
 		MultipartFile file = request.getFile("foto")
 		def imageUrl = multaService.saveFile(file);
 
 		Multa multa = new Multa(json)
 		multa.fotoURL = imageUrl
-		multa.user = user;
+		//multa.user = user;
 
 		if(!multa.save(flush: true, failOnError: true)){
 			respond new ApiResponse(status:"Erro",  msg: "Gravando dados")
