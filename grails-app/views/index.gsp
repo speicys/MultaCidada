@@ -136,7 +136,7 @@
 				var marker=new google.maps.Marker({
 			    	position: myLatlng,
 			    	map: mapSP,
-			    	title:"Hello World!",
+			    	title:parsedMulta[i].nomeTipo,
 			    	icon: image
 				});
 				markers.push(marker);
