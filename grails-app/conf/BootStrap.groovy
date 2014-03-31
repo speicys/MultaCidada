@@ -11,9 +11,9 @@ class BootStrap {
 
 		// cria tipos de multas
 		multaTipoService.loadTipos();
-
+		
 		multaService.load();
-
+		multaService.registerJSON();
 	}
 
 

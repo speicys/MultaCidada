@@ -7,10 +7,12 @@ import grails.rest.*
 @Resource(formats=['json', 'xml'])
 class Multa {
 
+	User user;
+	
 	double latitude;
 	double longitude;
 	String fotoURL;
-	String userID;
+	//String userID;
 
 	String data;
 	
