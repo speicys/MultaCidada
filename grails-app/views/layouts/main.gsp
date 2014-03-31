@@ -38,16 +38,16 @@
 body {
 	padding-top: 50px;
 	padding-bottom: 60px;
-	background: url("${resource(dir: 'images', file: 'math.png')}") repeat 0
+	background: url("${resource(dir: 'images', file: 'jean.png')}") repeat 0
 		0;
 }
 
 .navbar {
-	background-color: rgb(124, 15, 191);
+	background-color: rgb(255, 152, 0);
 }
 
 .navbar .navbar-brand {
-	color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 	font-size: 22px;
 }
 
@@ -96,8 +96,9 @@ body {
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${createLink(uri: '/')}"> <img
-				src="${resource(dir: 'images', file: 'note.png')}" /> Multa Cidadã
+			<a class="navbar-brand" href="${createLink(uri: '/')}"> 
+				<img src="${resource(dir: 'images', file: 'chapeu.png')}" /> 
+				Multa Cidadã
 			</a>
 		</div>
 		<div class="collapse navbar-collapse"
