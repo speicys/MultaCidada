@@ -12,7 +12,7 @@ class Multa {
 	double latitude;
 	double longitude;
 	String fotoURL;
-	//String userID;
+	String userID; //Sera removido...
 
 	String data;
 	
@@ -26,5 +26,7 @@ class Multa {
 	static transients=['nomeTipo']
 
 	static constraints = {
+		user  nullable: true
+		userID  nullable: true
 	}
 }
