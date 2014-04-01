@@ -9,7 +9,7 @@ class MultaTipo {
 							"Estacionado em vaga de deficiente", 
 							"Estacionado em vaga de idoso", 
 							"Parado em faixa de pedestre", 
-							"Veículo em mês condições", 
+							"Veículo em más condições", 
 							"Desrespeito ao ciclista"];
 	String nome;
 	
