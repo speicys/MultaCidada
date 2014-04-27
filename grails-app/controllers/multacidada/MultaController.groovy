@@ -1,16 +1,7 @@
 package multacidada
 
-import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
-import java.awt.event.ItemEvent;
-import java.lang.ref.ReferenceQueue.Null;
-import java.sql.ResultSet;
-import java.util.regex.Pattern.Neg;
-
 import groovy.json.JsonSlurper
 
-import org.apache.jasper.compiler.Node.ParamsAction;
-import org.grails.datastore.mapping.core.Session;
-import org.grails.datastore.mapping.query.Query
 import org.springframework.web.multipart.MultipartFile
 
 class MultaController  {
@@ -37,55 +28,61 @@ class MultaController  {
 		}
 		Multa multa = Multa.findById(params.id);
 		if (!multa) {
-			respond new ApiResponse(status:"Erro",  msg: "Multa não encontrada")
+			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Multa não encontrada")
 		}
 
 		log.info "show(): "+multa
-		respond multa
+		respond new ApiResponse(status:ApiStatus.OK, content:multa)
 	}
 
 	def valida() {
 		Multa multa = Multa.findById(params.id);
 		if(!multa){
-			respond new ApiResponse(status:"Erro",  msg: "Multa não encontrada")
+			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Multa não encontrada")
 		}
 
+
 		def user = User.findOrSaveWhere("code":params.userCode);
-		
-		if (params.valida.equals("yep")) {
+
+		ValidacaoTipo escolha = ValidacaoTipo.valueOf(params.valida.toUpperCase());
+		if (escolha.equals(ValidacaoTipo.YEP)) {
 			multa.yep++;
 		} else {
 			multa.nope++;
 		}
 
 		if(!multa.save(flush: true, failOnError: true)){
-			respond new ApiResponse(status:"Erro",  msg: "Gravando dados")
+			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Gravando dados")
 		}
 
-		respond multa
+		//LOG
+		Validacao v = new Validacao(user:user, multa:multa, escolha:escolha).save(flush:true);
+		println "DEBUG: "+(new Date())+": "+v.user.code+" "+v.multa.tipo+" "+v.escolha;
+		
+		respond new ApiResponse(status:ApiStatus.OK, content:multa)
 	}
 
 	def save() {
 		log.info "save() - "+params.multa
-		
-		//def user = User.findOrSaveWhere("code":params.userCode);
+
+		def user = User.findOrSaveWhere("code":params.userCode);
 		def json =  new JsonSlurper().parseText(params.multa)
 		MultipartFile file = request.getFile("foto")
 		def imageUrl = multaService.saveFile(file);
 
 		Multa multa = new Multa(json)
 		multa.fotoURL = imageUrl
-		//multa.user = user;
+		multa.user = user;
 
 		if(!multa.save(flush: true, failOnError: true)){
-			respond new ApiResponse(status:"Erro",  msg: "Gravando dados")
+			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Erro gravando dados")
 		}
 
-		respond multa
+		respond new ApiResponse(status:ApiStatus.OK, content:multa)
 	}
 
 	def list() {
-		println "list()"
+		println "list() - "+params.userCode
 
 		def user = null;
 		if (params.userCode) {
@@ -97,6 +94,8 @@ class MultaController  {
 			maxResults(100)
 			order("id", "desc")
 		}
-		respond result
+
+		respond new ApiResponse(status:ApiStatus.OK, content:result);
+
 	}
 }

@@ -2,6 +2,8 @@ package multacidada
 
 import java.sql.Date;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import grails.rest.*
 
 @Resource(formats=['json', 'xml'])
@@ -12,7 +14,6 @@ class Multa {
 	double latitude;
 	double longitude;
 	String fotoURL;
-	String userID; //Sera removido...
 
 	String data;
 	
@@ -21,12 +22,17 @@ class Multa {
 
 	int tipo;
 	
-	String getNomeTipo() { MultaTipo.tipos.get(tipo)}
+	String getNomeTipo() { 
+		try {
+			return MultaTipo.tipos.get(tipo)
+		} catch (Exception e) {
+			return "";
+		}
+	}
 	
 	static transients=['nomeTipo']
 
 	static constraints = {
 		user  nullable: true
-		userID  nullable: true
 	}
 }

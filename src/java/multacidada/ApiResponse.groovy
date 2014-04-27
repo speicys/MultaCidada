@@ -2,7 +2,7 @@ package multacidada
 
 class ApiResponse {
 
-	String status;
+	ApiStatus status;
 
-	String msg;
+	def content;
 }

@@ -27,7 +27,7 @@ class MultaService {
 				nope: m.nope,
 				tipo: m.tipo,
 				nomeTipo: m.getNomeTipo(),
-				userId: m.userID]
+				userId: m.user?m.user.id:""]
 		}
 	}
 	def load() {
