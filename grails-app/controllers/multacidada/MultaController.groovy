@@ -13,6 +13,7 @@ class MultaController  {
 	def multaService
 
 	def init() {
+		println "loading"
 		multaService.load()
 		list()
 	}
@@ -76,11 +77,10 @@ class MultaController  {
 	def list() {
 		println "list() - "+params.userCode
 		if (!params.userCode) {
-			respond new ApiResponse(status:ApiStatus.OK, content:result);
+			respond new ApiResponse(status:ApiStatus.ERROR, content:"Identificação do usuário não encontrada.");
 		}
 
-		def user = User.findOrSaveWhere(code:params.userCode);
-
+		def user = User.findOrSaveWhere(code:params.userCode)
 		def result = Multa.withCriteria  {
 			ne("user",user)
 			validacoes(CriteriaSpecification.LEFT_JOIN)  {
