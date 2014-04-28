@@ -23,7 +23,9 @@ environments {
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "devuser"
 			password = "devpass"
-		}
+			hibernate.show_sql=true
+			
+			}
 	}
 	
 	test {

@@ -4,9 +4,11 @@ class Validacao {
 
 	User user;
 
-	Multa multa;
-
 	ValidacaoTipo escolha;
+
+	static belongsTo = [multa: Multa]
+	
+	Date dateCreated;
 
 	static constraints = {
 	}

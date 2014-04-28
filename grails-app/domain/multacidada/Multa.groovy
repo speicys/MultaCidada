@@ -22,12 +22,29 @@ class Multa {
 
 	int tipo;
 	
+	Collection validacoes;
+	static hasMany = [validacoes: Validacao]
+	
+	Date dateCreated;
+	Date lastUpdated;
+	
 	String getNomeTipo() { 
 		try {
 			return MultaTipo.tipos.get(tipo)
 		} catch (Exception e) {
 			return "";
 		}
+	}
+	
+	def addValidacao(User user, ValidacaoTipo escolha)
+	{
+		this.addToValidacoes(new Validacao(user:user, escolha:escolha));
+		if (escolha.equals(ValidacaoTipo.YEP)) {
+			yep++;
+		} else {
+			nope++;
+		}
+		
 	}
 	
 	static transients=['nomeTipo']

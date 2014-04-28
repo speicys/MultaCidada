@@ -4,4 +4,6 @@ class User {
 
 	String code;
 
+	Date dateCreated;
+
 }

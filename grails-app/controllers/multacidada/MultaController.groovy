@@ -2,6 +2,7 @@ package multacidada
 
 import groovy.json.JsonSlurper
 
+import org.hibernate.criterion.CriteriaSpecification
 import org.springframework.web.multipart.MultipartFile
 
 class MultaController  {
@@ -12,7 +13,6 @@ class MultaController  {
 	def multaService
 
 	def init() {
-		println "loading"
 		multaService.load()
 		list()
 	}
@@ -41,24 +41,16 @@ class MultaController  {
 			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Multa não encontrada")
 		}
 
-
 		def user = User.findOrSaveWhere("code":params.userCode);
 
 		ValidacaoTipo escolha = ValidacaoTipo.valueOf(params.valida.toUpperCase());
-		if (escolha.equals(ValidacaoTipo.YEP)) {
-			multa.yep++;
-		} else {
-			multa.nope++;
-		}
-
+		multa.addValidacao(user, escolha);
 		if(!multa.save(flush: true, failOnError: true)){
 			respond new ApiResponse(status:ApiStatus.ERROR,  content: "Gravando dados")
 		}
 
-		//LOG
-		Validacao v = new Validacao(user:user, multa:multa, escolha:escolha).save(flush:true);
-		println "DEBUG: "+(new Date())+": "+v.user.code+" "+v.multa.tipo+" "+v.escolha;
-		
+		println "DEBUG: "+(new Date())+": "+user.code+" "+multa.tipo+" "+escolha;
+
 		respond new ApiResponse(status:ApiStatus.OK, content:multa)
 	}
 
@@ -83,19 +75,24 @@ class MultaController  {
 
 	def list() {
 		println "list() - "+params.userCode
-
-		def user = null;
-		if (params.userCode) {
-			user = User.findOrSaveWhere(code:params.userCode);
+		if (!params.userCode) {
+			respond new ApiResponse(status:ApiStatus.OK, content:result);
 		}
 
-		def result = Multa.withCriteria {
-			user != null ? ne("user",user):null;
+		def user = User.findOrSaveWhere(code:params.userCode);
+
+		def result = Multa.withCriteria  {
+			ne("user",user)
+			validacoes(CriteriaSpecification.LEFT_JOIN)  {
+				or{
+					isNull("user")
+					ne("user",user)
+				}
+			}
 			maxResults(100)
 			order("id", "desc")
 		}
 
 		respond new ApiResponse(status:ApiStatus.OK, content:result);
-
 	}
 }
