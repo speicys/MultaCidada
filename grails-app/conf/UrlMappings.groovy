@@ -5,6 +5,7 @@ class UrlMappings {
 	static mappings = {
 
 		"/multa/init"(controller: "multa", action: "init")
+		"/multa/list"(controller: "multa", action: "list")
 		"/multa/$id/valida/$valida"(controller: "multa", method:"GET", action: "valida")
 		"/multa/$id?"(resource: "multa")
 

@@ -75,6 +75,8 @@ class MultaController  {
 	}
 
 	def list() {
+		println "params "+params
+		
 		println "list() - "+params.userCode
 		if (!params.userCode) {
 			respond new ApiResponse(status:ApiStatus.ERROR, content:"Identificação do usuário não encontrada.");

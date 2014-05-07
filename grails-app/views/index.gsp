@@ -160,8 +160,8 @@
 	      
 	      function downloadData() {	      
   	        $(function() { 
-			  $.getJSON('${createLink(uri:"/multa", absolute:true)}', function(data) {
-			      parsedMulta = data;
+			  $.getJSON("${createLink(controller:'multa', action:'list', absolute:true, params:[userCode:0])}", function(data) {
+			      parsedMulta = data.content;
 			      loadMarkers();
 	  		    });
 		    });
